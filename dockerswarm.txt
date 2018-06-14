@@ -1,0 +1,1258 @@
+ --mount type=bind,source=/var/www/html,target=/var/www/html
+ 
+ docker service create --name MyWeb-mount --mount type=bind,source=/var/www/html,target=/var/www/html  --publish published=80,target=8080 --replicas 2 myapache:t1
+ ┌────────────────────────────────────────────────────────────────────┐
+     │                • MobaXterm Personal Edition v10.5 •                │
+     │              (X server, SSH client and network tools)              │
+     │                                                                    │
+     │ ➤ Your computer drives are accessible through the /drives path     │
+     │ ➤ Your DISPLAY is set to 172.31.1.18:0.0                           │
+     │ ➤ When using SSH, your remote DISPLAY is automatically forwarded   │
+     │ ➤ Each command status is specified by a special symbol (✔ or ✘)    │
+     │                                                                    │
+     │ • Important:                                                       │
+     │ This is MobaXterm Personal Edition. The Professional edition       │
+     │ allows you to customize MobaXterm for your company: you can add    │
+     │ your own logo, your parameters, your welcome message and generate  │
+     │ either an MSI installation package or a portable executable.       │
+     │ We can also modify MobaXterm or develop the plugins you need.      │
+     │ For more information: https://mobaxterm.mobatek.net/download.html  │
+     └────────────────────────────────────────────────────────────────────┘
+
+[2018-05-20 04:24.16]  ~
+[Admin.Admin-PC] ➤ cd c:
+                                                                                                                                        ✔
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[2018-05-20 04:24.19]  /drives/c
+[Admin.Admin-PC] ➤ cd Users/Admin/Downloads/
+                                                                                                                                        ✔
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[2018-05-20 04:24.32]  /drives/c/Users/Admin/Downloads
+[Admin.Admin-PC] ➤ ssh -i "Docker95678.pem" ec2-user@ec2-52-15-102-65.us-east-2.compute.amazonaws.com
+Warning: Permanently added 'ec2-52-15-102-65.us-east-2.compute.amazonaws.com' (RSA) to the list of known hosts.
+X11 forwarding request failed on channel 0
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-ami/2018.03-release-notes/
+6 package(s) needed for security, out of 7 available
+Run "sudo yum update" to apply all updates.
+[ec2-user@ip-172-31-23-201 ~]$ sudo su -
+[root@ip-172-31-23-201 ~]# yum install docker -y
+Loaded plugins: priorities, update-motd, upgrade-helper
+Resolving Dependencies
+--> Running transaction check
+---> Package docker.x86_64 0:17.12.1ce-1.135.amzn1 will be installed
+--> Processing Dependency: xfsprogs for package: docker-17.12.1ce-1.135.amzn1.x86_64
+--> Processing Dependency: libseccomp.so.2()(64bit) for package: docker-17.12.1ce-1.135.amzn1.x86_64
+--> Processing Dependency: libltdl.so.7()(64bit) for package: docker-17.12.1ce-1.135.amzn1.x86_64
+--> Running transaction check
+---> Package libseccomp.x86_64 0:2.3.1-2.4.amzn1 will be installed
+---> Package libtool-ltdl.x86_64 0:2.4.2-20.4.8.5.32.amzn1 will be installed
+---> Package xfsprogs.x86_64 0:4.5.0-9.21.amzn1 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================================================
+ Package                         Arch                      Version                                    Repository                    Size
+=========================================================================================================================================
+Installing:
+ docker                          x86_64                    17.12.1ce-1.135.amzn1                      amzn-main                     34 M
+Installing for dependencies:
+ libseccomp                      x86_64                    2.3.1-2.4.amzn1                            amzn-main                     79 k
+ libtool-ltdl                    x86_64                    2.4.2-20.4.8.5.32.amzn1                    amzn-main                     51 k
+ xfsprogs                        x86_64                    4.5.0-9.21.amzn1                           amzn-main                    1.7 M
+
+Transaction Summary
+=========================================================================================================================================
+Install  1 Package (+3 Dependent packages)
+
+Total download size: 36 M
+Installed size: 114 M
+Downloading packages:
+(1/4): libseccomp-2.3.1-2.4.amzn1.x86_64.rpm                                                                      |  79 kB  00:00:00
+(2/4): libtool-ltdl-2.4.2-20.4.8.5.32.amzn1.x86_64.rpm                                                            |  51 kB  00:00:00
+(3/4): xfsprogs-4.5.0-9.21.amzn1.x86_64.rpm                                                                       | 1.7 MB  00:00:00
+(4/4): docker-17.12.1ce-1.135.amzn1.x86_64.rpm                                                                    |  34 MB  00:00:04
+-----------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                    8.9 MB/s |  36 MB  00:00:04
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : libseccomp-2.3.1-2.4.amzn1.x86_64                                                                                     1/4
+  Installing : libtool-ltdl-2.4.2-20.4.8.5.32.amzn1.x86_64                                                                           2/4
+  Installing : xfsprogs-4.5.0-9.21.amzn1.x86_64                                                                                      3/4
+  Installing : docker-17.12.1ce-1.135.amzn1.x86_64                                                                                   4/4
+  Verifying  : xfsprogs-4.5.0-9.21.amzn1.x86_64                                                                                      1/4
+  Verifying  : docker-17.12.1ce-1.135.amzn1.x86_64                                                                                   2/4
+  Verifying  : libtool-ltdl-2.4.2-20.4.8.5.32.amzn1.x86_64                                                                           3/4
+  Verifying  : libseccomp-2.3.1-2.4.amzn1.x86_64                                                                                     4/4
+
+Installed:
+  docker.x86_64 0:17.12.1ce-1.135.amzn1
+
+Dependency Installed:
+  libseccomp.x86_64 0:2.3.1-2.4.amzn1       libtool-ltdl.x86_64 0:2.4.2-20.4.8.5.32.amzn1       xfsprogs.x86_64 0:4.5.0-9.21.amzn1
+
+Complete!
+[root@ip-172-31-23-201 ~]# yum install httpd -y
+Loaded plugins: priorities, update-motd, upgrade-helper
+amzn-main                                                                                                         | 2.1 kB  00:00:00
+amzn-updates                                                                                                      | 2.5 kB  00:00:00
+Resolving Dependencies
+--> Running transaction check
+---> Package httpd.x86_64 0:2.2.34-1.16.amzn1 will be installed
+--> Processing Dependency: httpd-tools = 2.2.34-1.16.amzn1 for package: httpd-2.2.34-1.16.amzn1.x86_64
+--> Processing Dependency: apr-util-ldap for package: httpd-2.2.34-1.16.amzn1.x86_64
+--> Processing Dependency: libaprutil-1.so.0()(64bit) for package: httpd-2.2.34-1.16.amzn1.x86_64
+--> Processing Dependency: libapr-1.so.0()(64bit) for package: httpd-2.2.34-1.16.amzn1.x86_64
+--> Running transaction check
+---> Package apr.x86_64 0:1.5.2-5.13.amzn1 will be installed
+---> Package apr-util.x86_64 0:1.5.4-6.18.amzn1 will be installed
+---> Package apr-util-ldap.x86_64 0:1.5.4-6.18.amzn1 will be installed
+---> Package httpd-tools.x86_64 0:2.2.34-1.16.amzn1 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================================================================
+ Package                           Arch                       Version                                Repository                     Size
+=========================================================================================================================================
+Installing:
+ httpd                             x86_64                     2.2.34-1.16.amzn1                      amzn-main                     1.2 M
+Installing for dependencies:
+ apr                               x86_64                     1.5.2-5.13.amzn1                       amzn-main                     118 k
+ apr-util                          x86_64                     1.5.4-6.18.amzn1                       amzn-main                      99 k
+ apr-util-ldap                     x86_64                     1.5.4-6.18.amzn1                       amzn-main                      19 k
+ httpd-tools                       x86_64                     2.2.34-1.16.amzn1                      amzn-main                      80 k
+
+Transaction Summary
+=========================================================================================================================================
+Install  1 Package (+4 Dependent packages)
+
+Total download size: 1.5 M
+Installed size: 3.6 M
+Downloading packages:
+(1/5): apr-1.5.2-5.13.amzn1.x86_64.rpm                                                                            | 118 kB  00:00:00
+(2/5): apr-util-1.5.4-6.18.amzn1.x86_64.rpm                                                                       |  99 kB  00:00:00
+(3/5): apr-util-ldap-1.5.4-6.18.amzn1.x86_64.rpm                                                                  |  19 kB  00:00:00
+(4/5): httpd-tools-2.2.34-1.16.amzn1.x86_64.rpm                                                                   |  80 kB  00:00:00
+(5/5): httpd-2.2.34-1.16.amzn1.x86_64.rpm                                                                         | 1.2 MB  00:00:00
+-----------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                    3.2 MB/s | 1.5 MB  00:00:00
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : apr-1.5.2-5.13.amzn1.x86_64                                                                                           1/5
+  Installing : apr-util-1.5.4-6.18.amzn1.x86_64                                                                                      2/5
+  Installing : httpd-tools-2.2.34-1.16.amzn1.x86_64                                                                                  3/5
+  Installing : apr-util-ldap-1.5.4-6.18.amzn1.x86_64                                                                                 4/5
+  Installing : httpd-2.2.34-1.16.amzn1.x86_64                                                                                        5/5
+  Verifying  : httpd-tools-2.2.34-1.16.amzn1.x86_64                                                                                  1/5
+  Verifying  : apr-util-1.5.4-6.18.amzn1.x86_64                                                                                      2/5
+  Verifying  : httpd-2.2.34-1.16.amzn1.x86_64                                                                                        3/5
+  Verifying  : apr-1.5.2-5.13.amzn1.x86_64                                                                                           4/5
+  Verifying  : apr-util-ldap-1.5.4-6.18.amzn1.x86_64                                                                                 5/5
+
+Installed:
+  httpd.x86_64 0:2.2.34-1.16.amzn1
+
+Dependency Installed:
+  apr.x86_64 0:1.5.2-5.13.amzn1                 apr-util.x86_64 0:1.5.4-6.18.amzn1        apr-util-ldap.x86_64 0:1.5.4-6.18.amzn1
+  httpd-tools.x86_64 0:2.2.34-1.16.amzn1
+
+Complete!
+[root@ip-172-31-23-201 ~]# service docker start
+Starting cgconfig service:                                 [  OK  ]
+Starting docker:        .                                  [  OK  ]
+[root@ip-172-31-23-201 ~]# service httpd start
+Starting httpd:                                            [  OK  ]
+[root@ip-172-31-23-201 ~]# cd /var/www/html
+[root@ip-172-31-23-201 html]# wget https://codeload.github.com/KomalKumraCoder/Shopping-Cart/zip/master
+--2018-05-20 09:31:16--  https://codeload.github.com/KomalKumraCoder/Shopping-Cart/zip/master
+Resolving codeload.github.com (codeload.github.com)... 192.30.253.120, 192.30.253.121
+Connecting to codeload.github.com (codeload.github.com)|192.30.253.120|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [application/zip]
+Saving to: ‘master’
+
+master                                 [ <=>                                                          ]  17.32K  --.-KB/s    in 0.01s
+
+2018-05-20 09:31:16 (1.56 MB/s) - ‘master’ saved [17740]
+
+[root@ip-172-31-23-201 html]# unzip master
+Archive:  master
+83d97b2aed663bb735d0c04a9ddfddf5ae0ce50d
+   creating: Shopping-Cart-master/
+ extracting: Shopping-Cart-master/README.md
+  inflating: Shopping-Cart-master/auth.html
+  inflating: Shopping-Cart-master/cart.html
+  inflating: Shopping-Cart-master/dashboard.css
+  inflating: Shopping-Cart-master/dashboard.html
+  inflating: Shopping-Cart-master/dashboardAdmin.html
+  inflating: Shopping-Cart-master/forAdmin.html
+  inflating: Shopping-Cart-master/index.html
+  inflating: Shopping-Cart-master/itemDetail.html
+   creating: Shopping-Cart-master/js/
+  inflating: Shopping-Cart-master/js/add.js
+  inflating: Shopping-Cart-master/js/auth.js
+  inflating: Shopping-Cart-master/js/cart1.js
+  inflating: Shopping-Cart-master/js/dashboard.js
+  inflating: Shopping-Cart-master/js/dashboardAdmin.js
+  inflating: Shopping-Cart-master/js/forAdmin.js
+  inflating: Shopping-Cart-master/js/itemDetailsJavascript.js
+  inflating: Shopping-Cart-master/js/orderDetail.js
+  inflating: Shopping-Cart-master/js/userPanel.js
+  inflating: Shopping-Cart-master/temp.html
+  inflating: Shopping-Cart-master/userPanel.html
+[root@ip-172-31-23-201 html]# mv /var/www/html/master/* /var/www/html
+mv: cannot stat ‘/var/www/html/master/*’: Not a directory
+[root@ip-172-31-23-201 html]# mv /var/www/html/master/* /var/www/html
+mv: cannot stat ‘/var/www/html/master/*’: Not a directory
+[root@ip-172-31-23-201 html]#  mv /var/www/html/Shopping-Cart-master/* /var/www/html
+[root@ip-172-31-23-201 html]# cd ..
+[root@ip-172-31-23-201 www]# cd ..
+[root@ip-172-31-23-201 var]# cd ..
+[root@ip-172-31-23-201 /]# exit
+logout
+[ec2-user@ip-172-31-23-201 ~]$ sudo su -
+Last login: Sun May 20 09:27:09 UTC 2018 on pts/0
+[root@ip-172-31-23-201 ~]# hostname I
+[root@ip-172-31-23-201 ~]# hostname -I
+172.31.23.201 172.17.0.1
+[root@ip-172-31-23-201 ~]# curl 172.31.23.201
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dashboard For Admin</title>
+</head>
+<body>
+<div id="mainDiv" style="border: 1px solid black;background-color:LightBluel;height:60px">
+<center><h1 style="color:white;background-color:LightBlue ;padding:0px;">HELLO ADMIN WELCOME TO YOUR STORE!! </h1></center>
+</div>
+<div id="sideDiv" style="border: 1px solid black;background-color:LightPink;height:500px;width:150px;float:left "></div>
+<div style="border : 1px solid black; background-color:MistyRose;height:500px;">
+<iframe id="target" src="temp.html" style="height:498px;width:1175px"></iframe>
+</div>
+<div id="footDiv" style="border:1px solid black;height:60px">
+<font color="red">
+<marquee direction="right"bgcolor="lightblue">
+<h2>Explore.Nurture.Inspire.Quality is our Recipe.</h2>
+</marquee>
+</font>
+</div>
+
+</body>
+<script type="text/javascript" src="./js/dashboardAdmin.js"></script>
+</html>
+[root@ip-172-31-23-201 ~]# docker run -d --name web centos:latest
+Unable to find image 'centos:latest' locally
+latest: Pulling from library/centos
+469cfcc7a4b3: Pull complete
+Digest: sha256:989b936d56b1ace20ddf855a301741e52abca38286382cba7f44443210e96d16
+Status: Downloaded newer image for centos:latest
+fb28e7636e51dc87db6cafac2efc9317534b5b594b3260a451c7c43239709e79
+[root@ip-172-31-23-201 ~]# vi dockerfile
+[root@ip-172-31-23-201 ~]# docker build -t myapache:t1
+"docker build" requires exactly 1 argument.
+See 'docker build --help'.
+
+Usage:  docker build [OPTIONS] PATH | URL | - [flags]
+
+Build an image from a Dockerfile
+[root@ip-172-31-23-201 ~]# docker build -t myapache:t1 .
+Sending build context to Docker daemon  11.26kB
+Step 1/3 : FROM centos
+ ---> e934aafc2206
+Step 2/3 : RUN yum install httpd -y
+ ---> Running in 25e6ec8f0c81
+Loaded plugins: fastestmirror, ovl
+Determining fastest mirrors
+ * base: mirror.siena.edu
+ * extras: mirror.siena.edu
+ * updates: centosc6.centos.org
+Resolving Dependencies
+--> Running transaction check
+---> Package httpd.x86_64 0:2.4.6-80.el7.centos will be installed
+--> Processing Dependency: httpd-tools = 2.4.6-80.el7.centos for package: httpd-2.4.6-80.el7.centos.x86_64
+--> Processing Dependency: system-logos >= 7.92.1-1 for package: httpd-2.4.6-80.el7.centos.x86_64
+--> Processing Dependency: /etc/mime.types for package: httpd-2.4.6-80.el7.centos.x86_64
+--> Processing Dependency: libaprutil-1.so.0()(64bit) for package: httpd-2.4.6-80.el7.centos.x86_64
+--> Processing Dependency: libapr-1.so.0()(64bit) for package: httpd-2.4.6-80.el7.centos.x86_64
+--> Running transaction check
+---> Package apr.x86_64 0:1.4.8-3.el7_4.1 will be installed
+---> Package apr-util.x86_64 0:1.5.2-6.el7 will be installed
+---> Package centos-logos.noarch 0:70.0.6-3.el7.centos will be installed
+---> Package httpd-tools.x86_64 0:2.4.6-80.el7.centos will be installed
+---> Package mailcap.noarch 0:2.1.41-2.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package             Arch          Version                    Repository   Size
+================================================================================
+Installing:
+ httpd               x86_64        2.4.6-80.el7.centos        base        2.7 M
+Installing for dependencies:
+ apr                 x86_64        1.4.8-3.el7_4.1            base        103 k
+ apr-util            x86_64        1.5.2-6.el7                base         92 k
+ centos-logos        noarch        70.0.6-3.el7.centos        base         21 M
+ httpd-tools         x86_64        2.4.6-80.el7.centos        base         89 k
+ mailcap             noarch        2.1.41-2.el7               base         31 k
+
+Transaction Summary
+================================================================================
+Install  1 Package (+5 Dependent packages)
+
+Total download size: 24 M
+Installed size: 31 M
+Downloading packages:
+warning: /var/cache/yum/x86_64/7/base/packages/httpd-tools-2.4.6-80.el7.centos.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
+Public key for httpd-tools-2.4.6-80.el7.centos.x86_64.rpm is not installed
+--------------------------------------------------------------------------------
+Total                                              9.5 MB/s |  24 MB  00:02
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Importing GPG key 0xF4A80EB5:
+ Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
+ Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
+ Package    : centos-release-7-4.1708.el7.centos.x86_64 (@CentOS)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : apr-1.4.8-3.el7_4.1.x86_64                                   1/6
+  Installing : apr-util-1.5.2-6.el7.x86_64                                  2/6
+  Installing : httpd-tools-2.4.6-80.el7.centos.x86_64                       3/6
+  Installing : centos-logos-70.0.6-3.el7.centos.noarch                      4/6
+  Installing : mailcap-2.1.41-2.el7.noarch                                  5/6
+  Installing : httpd-2.4.6-80.el7.centos.x86_64                             6/6
+  Verifying  : mailcap-2.1.41-2.el7.noarch                                  1/6
+  Verifying  : apr-util-1.5.2-6.el7.x86_64                                  2/6
+  Verifying  : httpd-2.4.6-80.el7.centos.x86_64                             3/6
+  Verifying  : httpd-tools-2.4.6-80.el7.centos.x86_64                       4/6
+  Verifying  : apr-1.4.8-3.el7_4.1.x86_64                                   5/6
+  Verifying  : centos-logos-70.0.6-3.el7.centos.noarch                      6/6
+
+Installed:
+  httpd.x86_64 0:2.4.6-80.el7.centos
+
+Dependency Installed:
+  apr.x86_64 0:1.4.8-3.el7_4.1
+  apr-util.x86_64 0:1.5.2-6.el7
+  centos-logos.noarch 0:70.0.6-3.el7.centos
+  httpd-tools.x86_64 0:2.4.6-80.el7.centos
+  mailcap.noarch 0:2.1.41-2.el7
+
+Complete!
+Removing intermediate container 25e6ec8f0c81
+ ---> ca7d27180d90
+Step 3/3 : CMD ["/usr/sbin/apachectl","-D","FOREGROUND"]
+ ---> Running in 483468cf53ee
+Removing intermediate container 483468cf53ee
+ ---> 2a59bcc2f490
+Successfully built 2a59bcc2f490
+Successfully tagged myapache:t1
+[root@ip-172-31-23-201 ~]# docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+docker: Error response from daemon: Conflict. The container name "/web" is already in use by container "fb28e7636e51dc87db6cafac2efc9317534b5b594b3260a451c7c43239709e79". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+[root@ip-172-31-23-201 ~]# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
+fb28e7636e51        centos:latest       "/bin/bash"         13 minutes ago      Exited (0) 13 minutes ago                       web
+[root@ip-172-31-23-201 ~]# docker stop fb2
+fb2
+[root@ip-172-31-23-201 ~]# docker rm fb2
+fb2
+[root@ip-172-31-23-201 ~]# docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+46d82df66d06f89cd06c16edef902b35e18e2eb8568b7bf14e82f6ecb8ab53ad
+docker: Error response from daemon: driver failed programming external connectivity on endpoint web (6ee8d46033a0b6e3ed799b46515ffa10590d7af2ce18c921e5a4258e03e1c5ab): Error starting userland proxy: listen tcp 0.0.0.0:80: bind: address already in use.
+[root@ip-172-31-23-201 ~]# netstat -ntlp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name
+tcp        0      0 127.0.0.1:25                0.0.0.0:*                   LISTEN      2634/sendmail
+tcp        0      0 0.0.0.0:111                 0.0.0.0:*                   LISTEN      2328/rpcbind
+tcp        0      0 0.0.0.0:56051               0.0.0.0:*                   LISTEN      2349/rpc.statd
+tcp        0      0 0.0.0.0:22                  0.0.0.0:*                   LISTEN      2604/sshd
+tcp        0      0 :::46171                    :::*                        LISTEN      2349/rpc.statd
+tcp        0      0 :::111                      :::*                        LISTEN      2328/rpcbind
+tcp        0      0 :::80                       :::*                        LISTEN      3050/httpd
+tcp        0      0 :::22                       :::*                        LISTEN      2604/sshd
+[root@ip-172-31-23-201 ~]# docker stop httpd
+Error response from daemon: No such container: httpd
+[root@ip-172-31-23-201 ~]# service stop httpd
+stop: unrecognized service
+[root@ip-172-31-23-201 ~]# service httpd stop
+Stopping httpd:                                            [  OK  ]
+[root@ip-172-31-23-201 ~]# docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+docker: Error response from daemon: Conflict. The container name "/web" is already in use by container "46d82df66d06f89cd06c16edef902b35e18e2eb8568b7bf14e82f6ecb8ab53ad". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+[root@ip-172-31-23-201 ~]# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS              PORTS               NAMES
+46d82df66d06        centos:latest       "/bin/bash"         About a minute ago   Created                                 web
+[root@ip-172-31-23-201 ~]# docker stop 46d
+46d
+[root@ip-172-31-23-201 ~]# docker rm 46d
+46d
+[root@ip-172-31-23-201 ~]# docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+49f09c9f7ba1af2ea20c6168edee91428a0166a19c06e59df5ddb3466787d87e
+[root@ip-172-31-23-201 ~]# service httpd restart
+Stopping httpd:                                            [FAILED]
+Starting httpd: httpd: apr_sockaddr_info_get() failed for I
+httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName
+                                                           [  OK  ]
+[root@ip-172-31-23-201 ~]# hostname -I
+172.31.23.201 172.17.0.1
+[root@ip-172-31-23-201 ~]# docker swarm init --advertise-addr 172.31.23.201
+Swarm initialized: current node (t2dbiteuvwbiwhctaxzkir1gy) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-01ibbi6qqekyyu0umzvmqndqfb7i6xqx7xbrx11mzs3d4wc42l-6aunu2tt16uophuqi6kzmeprc 172.31.23.201:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+[root@ip-172-31-23-201 ~]# docker node ls
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS
+t2dbiteuvwbiwhctaxzkir1gy *   I                   Ready               Active              Leader
+8hd97lde9nzh3w1h3x7869pf1     ip-172-31-31-157    Ready               Active
+[root@ip-172-31-23-201 ~]# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
+49f09c9f7ba1        centos:latest       "/bin/bash"         5 minutes ago       Exited (0) 5 minutes ago                       web
+[root@ip-172-31-23-201 ~]# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+myapache            t1                  2a59bcc2f490        18 minutes ago      297MB
+centos              latest              e934aafc2206        6 weeks ago         199MB
+[root@ip-172-31-23-201 ~]# docker service create --name MyWeb --publish published=80,target=80 --replicas 2 centos:latest
+8v8c9umj9fzhhx3ykhkudqbg9
+overall progress: 0 out of 2 tasks
+1/2: ready     [======================================>            ]
+2/2: ready     [======================================>            ]
+
+[1]+  Stopped                 docker service create --name MyWeb --publish published=80,target=80 --replicas 2 centos:latest
+[root@ip-172-31-23-201 ~]# docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+8v8c9umj9fzh        MyWeb               replicated          0/2                 centos:latest       *:80->80/tcp
+[root@ip-172-31-23-201 ~]# docker rm MyWeb
+Error: No such container: MyWeb
+[root@ip-172-31-23-201 ~]# docker services ls
+docker: 'services' is not a docker command.
+See 'docker --help'
+[root@ip-172-31-23-201 ~]# docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+8v8c9umj9fzh        MyWeb               replicated          0/2                 centos:latest       *:80->80/tcp
+[root@ip-172-31-23-201 ~]# docker services rm MyWeb
+docker: 'services' is not a docker command.
+See 'docker --help'
+[root@ip-172-31-23-201 ~]# docker service rm MyWeb
+MyWeb
+[root@ip-172-31-23-201 ~]# docker service create --name MyWeb --publish published=80,target=80 --replicas 2 myapache:t1
+image myapache:t1 could not be accessed on a registry to record
+its digest. Each node will access myapache:t1 independently,
+possibly leading to different nodes running different
+versions of the image.
+
+m1tz5mjntmfqurkidu948oi8v
+overall progress: 2 out of 2 tasks
+1/2: running   [==================================================>]
+2/2: running   [==================================================>]
+verify: Service converged
+[root@ip-172-31-23-201 ~]# service httpd stop
+Stopping httpd:                                            [  OK  ]
+[root@ip-172-31-23-201 ~]# docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+m1tz5mjntmfq        MyWeb               replicated          2/2                 myapache:t1         *:80->80/tcp
+[root@ip-172-31-23-201 ~]# cd /var/www/html
+[root@ip-172-31-23-201 html]# ls
+auth.html  dashboardAdmin.html  dashboard.html  index.html       js      README.md             temp.html
+cart.html  dashboard.css        forAdmin.html   itemDetail.html  master  Shopping-Cart-master  userPanel.html
+[root@ip-172-31-23-201 html]# cd /etc/httpd/
+[root@ip-172-31-23-201 httpd]# ls
+conf  conf.d  logs  modules  run
+[root@ip-172-31-23-201 httpd]# cat conf.d
+cat: conf.d: Is a directory
+[root@ip-172-31-23-201 httpd]# cd conf.d/
+[root@ip-172-31-23-201 conf.d]# ls
+notrace.conf  README  welcome.conf
+[root@ip-172-31-23-201 conf.d]# cat welcome.conf
+#
+# This configuration file enables the default "Welcome"
+# page if there is no default index page present for
+# the root URL.  To disable the Welcome page, comment
+# out all the lines below.
+#
+<LocationMatch "^/+$">
+    Options -Indexes
+    ErrorDocument 403 /error/noindex.html
+</LocationMatch>
+
+[root@ip-172-31-23-201 conf.d]# vi welcome.conf
+[root@ip-172-31-23-201 conf.d]# cd /var/www/html
+[root@ip-172-31-23-201 html]# ls
+auth.html  dashboardAdmin.html  dashboard.html  index.html       js      README.md             temp.html
+cart.html  dashboard.css        forAdmin.html   itemDetail.html  master  Shopping-Cart-master  userPanel.html
+[root@ip-172-31-23-201 html]# service httpd restart
+Stopping httpd:                                            [FAILED]
+Starting httpd: httpd: apr_sockaddr_info_get() failed for I
+httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName
+                                                           [  OK  ]
+[root@ip-172-31-23-201 html]# curl localhost
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"><html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+                <title>Apache HTTP Server Test Page powered by CentOS</title>
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Bootstrap -->
+    <link href="/noindex/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="noindex/css/open-sans.css" type="text/css" />
+
+<style type="text/css"><!--
+
+body {
+  font-family: "Open Sans", Helvetica, sans-serif;
+  font-weight: 100;
+  color: #ccc;
+  background: rgba(10, 24, 55, 1);
+  font-size: 16px;
+}
+
+h2, h3, h4 {
+  font-weight: 200;
+}
+
+h2 {
+  font-size: 28px;
+}
+
+.jumbotron {
+  margin-bottom: 0;
+  color: #333;
+  background: rgb(212,212,221); /* Old browsers */
+  background: radial-gradient(ellipse at center top, rgba(255,255,255,1) 0%,rgba(174,174,183,1) 100%); /* W3C */
+}
+
+.jumbotron h1 {
+  font-size: 128px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0px 2px 0px #abc,
+               0px 4px 10px rgba(0,0,0,0.15),
+               0px 5px 2px rgba(0,0,0,0.1),
+               0px 6px 30px rgba(0,0,0,0.1);
+}
+
+.jumbotron p {
+  font-size: 28px;
+  font-weight: 100;
+}
+
+.main {
+   background: white;
+   color: #234;
+   border-top: 1px solid rgba(0,0,0,0.12);
+   padding-top: 30px;
+   padding-bottom: 40px;
+}
+
+.footer {
+   border-top: 1px solid rgba(255,255,255,0.2);
+   padding-top: 30px;
+}
+
+    --></style>
+</head>
+<body>
+  <div class="jumbotron text-center">
+    <div class="container">
+          <h1>Testing 123..</h1>
+                <p class="lead">This page is used to test the proper operation of the <a href="http://apache.org">Apache HTTP server</a> after it has been installed. If you can read this page it means that this site is working properly. This server is powered by <a href="http://centos.org">CentOS</a>.</p>
+                </div>
+  </div>
+  <div class="main">
+    <div class="container">
+       <div class="row">
+                        <div class="col-sm-6">
+                        <h2>Just visiting?</h2>
+                                        <p class="lead">The website you just visited is either experiencing problems or is undergoing routine maintenance.</p>
+                                        <p>If you would like to let the administrators of this website know that you've seen this page instead of the page you expected, you should send them e-mail. In general, mail sent to the name "webmaster" and directed to the website's domain should reach the appropriate person.</p>
+                                        <p>For example, if you experienced problems while visiting www.example.com, you should send e-mail to "webmaster@example.com".</p>
+                                </div>
+                                <div class="col-sm-6">
+                                        <h2>Are you the Administrator?</h2>
+                                        <p>You should add your website content to the directory <tt>/var/www/html/</tt>.</p>
+                                        <p>To prevent this page from ever being used, follow the instructions in the file <tt>/etc/httpd/conf.d/welcome.conf</tt>.</p>
+
+                                        <h2>Promoting Apache and CentOS</h2>
+                                        <p>You are free to use the images below on Apache and CentOS Linux powered HTTP servers.  Thanks for using Apache and CentOS!</p>
+                                        <p><a href="http://httpd.apache.org/"><img src="images/apache_pb.gif" alt="[ Powered by Apache ]"></a> <a href="http://www.centos.org/"><img src="images/poweredby.png" alt="[ Powered by CentOS Linux ]" height="31" width="88"></a></p>
+                                </div>
+                        </div>
+            </div>
+                </div>
+        </div>
+          <div class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <h2>Important note:</h2>
+            <p class="lead">The CentOS Project has nothing to do with this website or its content,
+            it just provides the software that makes the website run.</p>
+
+            <p>If you have issues with the content of this site, contact the owner of the domain, not the CentOS project.
+            Unless you intended to visit CentOS.org, the CentOS Project does not have anything to do with this website,
+            the content or the lack of it.</p>
+            <p>For example, if this website is www.example.com, you would find the owner of the example.com domain at the following WHOIS server:</p>
+            <p><a href="http://www.internic.net/whois.html">http://www.internic.net/whois.html</a></p>
+          </div>
+          <div class="col-sm-6">
+            <h2>The CentOS Project</h2>
+            <p>The CentOS Linux distribution is a stable, predictable, manageable and reproduceable platform derived from
+               the sources of Red Hat Enterprise Linux (RHEL).<p>
+
+            <p>Additionally to being a popular choice for web hosting, CentOS also provides a rich platform for open source communities to build upon. For more information
+               please visit the <a href="http://www.centos.org/">CentOS website</a>.</p>
+          </div>
+        </div>
+                  </div>
+    </div>
+  </div>
+</body></html>
+[root@ip-172-31-23-201 html]# ls
+auth.html  dashboardAdmin.html  dashboard.html  index.html       js      README.md             temp.html
+cart.html  dashboard.css        forAdmin.html   itemDetail.html  master  Shopping-Cart-master  userPanel.html
+[root@ip-172-31-23-201 html]# cat index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dashboard For Admin</title>
+</head>
+<body>
+<div id="mainDiv" style="border: 1px solid black;background-color:LightBluel;height:60px">
+<center><h1 style="color:white;background-color:LightBlue ;padding:0px;">HELLO ADMIN WELCOME TO YOUR STORE!! </h1></center>
+</div>
+<div id="sideDiv" style="border: 1px solid black;background-color:LightPink;height:500px;width:150px;float:left "></div>
+<div style="border : 1px solid black; background-color:MistyRose;height:500px;">
+<iframe id="target" src="temp.html" style="height:498px;width:1175px"></iframe>
+</div>
+<div id="footDiv" style="border:1px solid black;height:60px">
+<font color="red">
+<marquee direction="right"bgcolor="lightblue">
+<h2>Explore.Nurture.Inspire.Quality is our Recipe.</h2>
+</marquee>
+</font>
+</div>
+
+</body>
+<script type="text/javascript" src="./js/dashboardAdmin.js"></script>
+</html>
+[root@ip-172-31-23-201 html]# cd ..
+[root@ip-172-31-23-201 www]# ls
+cgi-bin  error  html  icons
+[root@ip-172-31-23-201 www]# cd /
+[root@ip-172-31-23-201 /]# ls
+bin   cgroup  etc   lib    local       media  opt   root  sbin     srv  tmp  var
+boot  dev     home  lib64  lost+found  mnt    proc  run   selinux  sys  usr
+[root@ip-172-31-23-201 /]# service httpd restart
+Stopping httpd:                                            [  OK  ]
+Starting httpd: httpd: apr_sockaddr_info_get() failed for I
+httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName
+                                                           [  OK  ]
+[root@ip-172-31-23-201 /]# curl localhost
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"><html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+                <title>Apache HTTP Server Test Page powered by CentOS</title>
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Bootstrap -->
+    <link href="/noindex/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="noindex/css/open-sans.css" type="text/css" />
+
+<style type="text/css"><!--
+
+body {
+  font-family: "Open Sans", Helvetica, sans-serif;
+  font-weight: 100;
+  color: #ccc;
+  background: rgba(10, 24, 55, 1);
+  font-size: 16px;
+}
+
+h2, h3, h4 {
+  font-weight: 200;
+}
+
+h2 {
+  font-size: 28px;
+}
+
+.jumbotron {
+  margin-bottom: 0;
+  color: #333;
+  background: rgb(212,212,221); /* Old browsers */
+  background: radial-gradient(ellipse at center top, rgba(255,255,255,1) 0%,rgba(174,174,183,1) 100%); /* W3C */
+}
+
+.jumbotron h1 {
+  font-size: 128px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0px 2px 0px #abc,
+               0px 4px 10px rgba(0,0,0,0.15),
+               0px 5px 2px rgba(0,0,0,0.1),
+               0px 6px 30px rgba(0,0,0,0.1);
+}
+
+.jumbotron p {
+  font-size: 28px;
+  font-weight: 100;
+}
+
+.main {
+   background: white;
+   color: #234;
+   border-top: 1px solid rgba(0,0,0,0.12);
+   padding-top: 30px;
+   padding-bottom: 40px;
+}
+
+.footer {
+   border-top: 1px solid rgba(255,255,255,0.2);
+   padding-top: 30px;
+}
+
+    --></style>
+</head>
+<body>
+  <div class="jumbotron text-center">
+    <div class="container">
+          <h1>Testing 123..</h1>
+                <p class="lead">This page is used to test the proper operation of the <a href="http://apache.org">Apache HTTP server</a> after it has been installed. If you can read this page it means that this site is working properly. This server is powered by <a href="http://centos.org">CentOS</a>.</p>
+                </div>
+  </div>
+  <div class="main">
+    <div class="container">
+       <div class="row">
+                        <div class="col-sm-6">
+                        <h2>Just visiting?</h2>
+                                        <p class="lead">The website you just visited is either experiencing problems or is undergoing routine maintenance.</p>
+                                        <p>If you would like to let the administrators of this website know that you've seen this page instead of the page you expected, you should send them e-mail. In general, mail sent to the name "webmaster" and directed to the website's domain should reach the appropriate person.</p>
+                                        <p>For example, if you experienced problems while visiting www.example.com, you should send e-mail to "webmaster@example.com".</p>
+                                </div>
+                                <div class="col-sm-6">
+                                        <h2>Are you the Administrator?</h2>
+                                        <p>You should add your website content to the directory <tt>/var/www/html/</tt>.</p>
+                                        <p>To prevent this page from ever being used, follow the instructions in the file <tt>/etc/httpd/conf.d/welcome.conf</tt>.</p>
+
+                                        <h2>Promoting Apache and CentOS</h2>
+                                        <p>You are free to use the images below on Apache and CentOS Linux powered HTTP servers.  Thanks for using Apache and CentOS!</p>
+                                        <p><a href="http://httpd.apache.org/"><img src="images/apache_pb.gif" alt="[ Powered by Apache ]"></a> <a href="http://www.centos.org/"><img src="images/poweredby.png" alt="[ Powered by CentOS Linux ]" height="31" width="88"></a></p>
+                                </div>
+                        </div>
+            </div>
+                </div>
+        </div>
+          <div class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <h2>Important note:</h2>
+            <p class="lead">The CentOS Project has nothing to do with this website or its content,
+            it just provides the software that makes the website run.</p>
+
+            <p>If you have issues with the content of this site, contact the owner of the domain, not the CentOS project.
+            Unless you intended to visit CentOS.org, the CentOS Project does not have anything to do with this website,
+            the content or the lack of it.</p>
+            <p>For example, if this website is www.example.com, you would find the owner of the example.com domain at the following WHOIS server:</p>
+            <p><a href="http://www.internic.net/whois.html">http://www.internic.net/whois.html</a></p>
+          </div>
+          <div class="col-sm-6">
+            <h2>The CentOS Project</h2>
+            <p>The CentOS Linux distribution is a stable, predictable, manageable and reproduceable platform derived from
+               the sources of Red Hat Enterprise Linux (RHEL).<p>
+
+            <p>Additionally to being a popular choice for web hosting, CentOS also provides a rich platform for open source communities to build upon. For more information
+               please visit the <a href="http://www.centos.org/">CentOS website</a>.</p>
+          </div>
+        </div>
+                  </div>
+    </div>
+  </div>
+</body></html>
+[root@ip-172-31-23-201 /]#
+[root@ip-172-31-23-201 /]# docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+bec066a456cc        myapache:t1         "/usr/sbin/apachectl…"   43 minutes ago      Up 43 minutes                           MyWeb.1.5mwwi6ybyjrr5antwoeuettcq
+88fa3a98a133        myapache:t1         "/usr/sbin/apachectl…"   44 minutes ago      Up 44 minutes                           MyWeb.2.91iep2lzy0jdfug8oo5jjbq0e
+[root@ip-172-31-23-201 /]#
+[root@ip-172-31-23-201 /]# docker exec -it bec066a456cc bash
+[root@bec066a456cc /]# cd /var/www/html/
+[root@bec066a456cc html]# ls
+[root@bec066a456cc html]# exit
+[root@ip-172-31-23-201 /]# history
+    1  yum install docker -y
+    2  yum install httpd -y
+    3  service docker start
+    4  service httpd start
+    5  cd /var/www/html
+    6  wget https://codeload.github.com/KomalKumraCoder/Shopping-Cart/zip/master
+    7  unzip master
+    8  mv /var/www/html/master/* /var/www/html
+    9   mv /var/www/html/Shopping-Cart-master/* /var/www/html
+   10  cd ..
+   11  exit
+   12  hostname I
+   13  hostname -I
+   14  curl 172.31.23.201
+   15  docker run -d --name web centos:latest
+   16  vi dockerfile
+   17  docker build -t myapache:t1
+   18  docker build -t myapache:t1 .
+   19  docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+   20  docker ps -a
+   21  docker stop fb2
+   22  docker rm fb2
+   23  docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+   24  netstat -ntlp
+   25  docker stop httpd
+   26  service stop httpd
+   27  service httpd stop
+   28  docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+   29  docker ps -a
+   30  docker stop 46d
+   31  docker rm 46d
+   32  docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+   33  service httpd restart
+   34  hostname -I
+   35  docker swarm init --advertise-addr 172.31.23.201
+   36  docker node ls
+   37  docker ps -a
+   38  docker images
+   39  docker service create --name MyWeb --publish published=80,target=80 --replicas 2 centos:latest
+   40  docker service ls
+   41  docker rm MyWeb
+   42  docker services ls
+   43  docker service ls
+   44  docker services rm MyWeb
+   45  docker service rm MyWeb
+   46  docker service create --name MyWeb --publish published=80,target=80 --replicas 2 myapache:t1
+   47  service httpd stop
+   48  docker service ls
+   49  cd /var/www/html
+   50  ls
+   51  cd /etc/httpd/
+   52  ls
+   53  cat conf.d
+   54  cd conf.d/
+   55  ls
+   56  cat welcome.conf
+   57  vi welcome.conf
+   58  cd /var/www/html
+   59  ls
+   60  service httpd restart
+   61  curl localhost
+   62  ls
+   63  cat index.html
+   64  cd ..
+   65  ls
+   66  cd /
+   67  ls
+   68  service httpd restart
+   69  curl localhost
+   70  docker ps
+   71  docker exec -it bec066a456cc bash
+   72  history
+[root@ip-172-31-23-201 /]# cat dockerfile
+cat: dockerfile: No such file or directory
+[root@ip-172-31-23-201 /]# cd
+[root@ip-172-31-23-201 ~]# cat dockerfile
+FROM centos
+RUN yum install httpd -y
+CMD ["/usr/sbin/apachectl","-D","FOREGROUND"]
+[root@ip-172-31-23-201 ~]# docker service
+
+Usage:  docker service COMMAND
+
+Manage services
+
+Options:
+
+
+Commands:
+  create      Create a new service
+  inspect     Display detailed information on one or more services
+  logs        Fetch the logs of a service or task
+  ls          List services
+  ps          List the tasks of one or more services
+  rm          Remove one or more services
+  rollback    Revert changes to a service's configuration
+  scale       Scale one or multiple replicated services
+  update      Update a service
+
+Run 'docker service COMMAND --help' for more information on a command.
+[root@ip-172-31-23-201 ~]# docker service  create -h
+Flag shorthand -h has been deprecated, please use --help
+
+Usage:  docker service create [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Create a new service
+
+Options:
+      --config config                      Specify configurations to expose to the service
+      --constraint list                    Placement constraints
+      --container-label list               Container labels
+      --credential-spec credential-spec    Credential spec for managed service account (Windows only)
+  -d, --detach                             Exit immediately instead of waiting for the service to converge
+      --dns list                           Set custom DNS servers
+      --dns-option list                    Set DNS options
+      --dns-search list                    Set custom DNS search domains
+      --endpoint-mode string               Endpoint mode (vip or dnsrr) (default "vip")
+      --entrypoint command                 Overwrite the default ENTRYPOINT of the image
+  -e, --env list                           Set environment variables
+      --env-file list                      Read in a file of environment variables
+      --generic-resource list              User defined resources
+      --group list                         Set one or more supplementary user groups for the container
+      --health-cmd string                  Command to run to check health
+      --health-interval duration           Time between running the check (ms|s|m|h)
+      --health-retries int                 Consecutive failures needed to report unhealthy
+      --health-start-period duration       Start period for the container to initialize before counting retries towards unstable
+                                           (ms|s|m|h)
+      --health-timeout duration            Maximum time to allow one check to run (ms|s|m|h)
+      --host list                          Set one or more custom host-to-IP mappings (host:ip)
+      --hostname string                    Container hostname
+      --isolation string                   Service container isolation mode
+  -l, --label list                         Service labels
+      --limit-cpu decimal                  Limit CPUs
+      --limit-memory bytes                 Limit Memory
+      --log-driver string                  Logging driver for service
+      --log-opt list                       Logging driver options
+      --mode string                        Service mode (replicated or global) (default "replicated")
+      --mount mount                        Attach a filesystem mount to the service
+      --name string                        Service name
+      --network network                    Network attachments
+      --no-healthcheck                     Disable any container-specified HEALTHCHECK
+      --no-resolve-image                   Do not query the registry to resolve image digest and supported platforms
+      --placement-pref pref                Add a placement preference
+  -p, --publish port                       Publish a port as a node port
+  -q, --quiet                              Suppress progress output
+      --read-only                          Mount the container's root filesystem as read only
+      --replicas uint                      Number of tasks
+      --reserve-cpu decimal                Reserve CPUs
+      --reserve-memory bytes               Reserve Memory
+      --restart-condition string           Restart when condition is met ("none"|"on-failure"|"any") (default "any")
+      --restart-delay duration             Delay between restart attempts (ns|us|ms|s|m|h) (default 5s)
+      --restart-max-attempts uint          Maximum number of restarts before giving up
+      --restart-window duration            Window used to evaluate the restart policy (ns|us|ms|s|m|h)
+      --rollback-delay duration            Delay between task rollbacks (ns|us|ms|s|m|h) (default 0s)
+      --rollback-failure-action string     Action on rollback failure ("pause"|"continue") (default "pause")
+      --rollback-max-failure-ratio float   Failure rate to tolerate during a rollback (default 0)
+      --rollback-monitor duration          Duration after each task rollback to monitor for failure (ns|us|ms|s|m|h) (default 5s)
+      --rollback-order string              Rollback order ("start-first"|"stop-first") (default "stop-first")
+      --rollback-parallelism uint          Maximum number of tasks rolled back simultaneously (0 to roll back all at once) (default 1)
+      --secret secret                      Specify secrets to expose to the service
+      --stop-grace-period duration         Time to wait before force killing a container (ns|us|ms|s|m|h) (default 10s)
+      --stop-signal string                 Signal to stop the container
+  -t, --tty                                Allocate a pseudo-TTY
+      --update-delay duration              Delay between updates (ns|us|ms|s|m|h) (default 0s)
+      --update-failure-action string       Action on update failure ("pause"|"continue"|"rollback") (default "pause")
+      --update-max-failure-ratio float     Failure rate to tolerate during an update (default 0)
+      --update-monitor duration            Duration after each task update to monitor for failure (ns|us|ms|s|m|h) (default 5s)
+      --update-order string                Update order ("start-first"|"stop-first") (default "stop-first")
+      --update-parallelism uint            Maximum number of tasks updated simultaneously (0 to update all at once) (default 1)
+  -u, --user string                        Username or UID (format: <name|uid>[:<group|gid>])
+      --with-registry-auth                 Send registry authentication details to swarm agents
+  -w, --workdir string                     Working directory inside the container
+[root@ip-172-31-23-201 ~]# docker service  create -h|grep volume
+[root@ip-172-31-23-201 ~]# docker service  create -h|grep mount
+      --mount mount                        Attach a filesystem mount to the service
+[root@ip-172-31-23-201 ~]# history
+    1  yum install docker -y
+    2  yum install httpd -y
+    3  service docker start
+    4  service httpd start
+    5  cd /var/www/html
+    6  wget https://codeload.github.com/KomalKumraCoder/Shopping-Cart/zip/master
+    7  unzip master
+    8  mv /var/www/html/master/* /var/www/html
+    9   mv /var/www/html/Shopping-Cart-master/* /var/www/html
+   10  cd ..
+   11  exit
+   12  hostname I
+   13  hostname -I
+   14  curl 172.31.23.201
+   15  docker run -d --name web centos:latest
+   16  vi dockerfile
+   17  docker build -t myapache:t1
+   18  docker build -t myapache:t1 .
+   19  docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+   20  docker ps -a
+   21  docker stop fb2
+   22  docker rm fb2
+   23  docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+   24  netstat -ntlp
+   25  docker stop httpd
+   26  service stop httpd
+   27  service httpd stop
+   28  docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+   29  docker ps -a
+   30  docker stop 46d
+   31  docker rm 46d
+   32  docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+   33  service httpd restart
+   34  hostname -I
+   35  docker swarm init --advertise-addr 172.31.23.201
+   36  docker node ls
+   37  docker ps -a
+   38  docker images
+   39  docker service create --name MyWeb --publish published=80,target=80 --replicas 2 centos:latest
+   40  docker service ls
+   41  docker rm MyWeb
+   42  docker services ls
+   43  docker service ls
+   44  docker services rm MyWeb
+   45  docker service rm MyWeb
+   46  docker service create --name MyWeb --publish published=80,target=80 --replicas 2 myapache:t1
+   47  service httpd stop
+   48  docker service ls
+   49  cd /var/www/html
+   50  ls
+   51  cd /etc/httpd/
+   52  ls
+   53  cat conf.d
+   54  cd conf.d/
+   55  ls
+   56  cat welcome.conf
+   57  vi welcome.conf
+   58  cd /var/www/html
+   59  ls
+   60  service httpd restart
+   61  curl localhost
+   62  ls
+   63  cat index.html
+   64  cd ..
+   65  ls
+   66  cd /
+   67  ls
+   68  service httpd restart
+   69  curl localhost
+   70  docker ps
+   71  docker exec -it bec066a456cc bash
+   72  history
+   73  cat dockerfile
+   74  cd
+   75  cat dockerfile
+   76  docker service
+   77  docker service  create -h
+   78  docker service  create -h|grep volume
+   79  docker service  create -h|grep mount
+   80  history
+[root@ip-172-31-23-201 ~]# #   46  docker service create --name MyWeb --publish published=80,target=80 --replicas 2 myapache:t1
+[root@ip-172-31-23-201 ~]#
+[root@ip-172-31-23-201 ~]# #   46  docker service create --name MyWeb-mount --mount  --publish published=80,target=8080 --replicas 2 myapache:t1
+[root@ip-172-31-23-201 ~]# cd /var/www/html/
+[root@ip-172-31-23-201 html]# ls
+auth.html  dashboardAdmin.html  dashboard.html  index.html       js      README.md             temp.html
+cart.html  dashboard.css        forAdmin.html   itemDetail.html  master  Shopping-Cart-master  userPanel.html
+[root@ip-172-31-23-201 html]# docker service create --name MyWeb-mount --mount /var/www/html  --publish published=80,target=8080 --replicas 2 myapache:t1
+invalid argument "/var/www/html" for "--mount" flag: invalid field '/var/www/html' must be a key=value pair
+See 'docker service create --help'.
+[root@ip-172-31-23-201 html]# docker service create --name MyWeb-mount --mount /var/www/html=/var/www/html  --publish published=80,target=8080 --replicas 2 myapache:t1
+invalid argument "/var/www/html=/var/www/html" for "--mount" flag: unexpected key '/var/www/html' in '/var/www/html=/var/www/html'
+See 'docker service create --help'.
+[root@ip-172-31-23-201 html]#
+[root@ip-172-31-23-201 html]# docker service create --name MyWeb-mount --mount type=bind,source=/var/www/html,target=/var/www/html  --publish published=80,target=8080 --replicas 2 myapache:t1
+Error response from daemon: rpc error: code = InvalidArgument desc = port '80' is already in use by service 'MyWeb' (m1tz5mjntmfqurkidu948oi8v) as an ingress port
+[root@ip-172-31-23-201 html]# docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+m1tz5mjntmfq        MyWeb               replicated          2/2                 myapache:t1         *:80->80/tcp
+[root@ip-172-31-23-201 html]# docker service rm My
+Error: No such service: My
+[root@ip-172-31-23-201 html]#
+[root@ip-172-31-23-201 html]#
+[root@ip-172-31-23-201 html]#
+[root@ip-172-31-23-201 html]# docker service rm MyWeb
+MyWeb
+[root@ip-172-31-23-201 html]# docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+[root@ip-172-31-23-201 html]# docker service create --name MyWeb-mount --mount type=bind,source=/var/www/html,target=/var/www/html  --publish published=80,target=8080 --replicas 2 myapache:t1
+[root@ip-172-31-23-201 html]# docker service create --name MyWeb-mount --mount type=bind,source=/var/www/html,target=/var/www/html  --publish published=80,target=8080 --replicas 2 myapache:t1
+image myapache:t1 could not be accessed on a registry to record
+its digest. Each node will access myapache:t1 independently,
+possibly leading to different nodes running different
+versions of the image.
+
+w00bsgcx3dzdnt0cz9v9hg5za
+overall progress: 2 out of 2 tasks
+1/2: running   [==================================================>]
+2/2: running   [==================================================>]
+verify: Service converged
+[root@ip-172-31-23-201 html]# docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+w00bsgcx3dzd        MyWeb-mount         replicated          2/2                 myapache:t1         *:80->8080/tcp
+[root@ip-172-31-23-201 html]# curl localhost:8080
+curl: (7) Failed to connect to localhost port 8080: Connection refused
+[root@ip-172-31-23-201 html]# curl localhost:80
+curl: (7) Failed to connect to localhost port 80: Connection refused
+[root@ip-172-31-23-201 html]# docker service rm MyWeb-mout
+Error: No such service: MyWeb-mout
+[root@ip-172-31-23-201 html]# docker service rm MyWeb-mount
+MyWeb-mount
+[root@ip-172-31-23-201 html]# docker service create --name MyWeb-mount --mount type=bind,source=/var/www/html,target=/var/www/html  --publish published=80,target=80 --replicas 2 myapache:t1
+image myapache:t1 could not be accessed on a registry to record
+its digest. Each node will access myapache:t1 independently,
+possibly leading to different nodes running different
+versions of the image.
+
+fp9v6gsylfnenw796yqil4tf6
+overall progress: 2 out of 2 tasks
+1/2: running   [==================================================>]
+2/2: running   [==================================================>]
+verify: Waiting 4 seconds to verify that tasks are stable...
+verify: Waiting 4 seconds to verify that tasks are stable...
+verify: Service converged
+[root@ip-172-31-23-201 html]# ls
+auth.html  dashboardAdmin.html  dashboard.html  index.html       js      README.md             temp.html
+cart.html  dashboard.css        forAdmin.html   itemDetail.html  master  Shopping-Cart-master  userPanel.html
+[root@ip-172-31-23-201 html]# docker service ls
+[root@ip-172-31-23-201 html]# docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+fp9v6gsylfne        MyWeb-mount         replicated          2/2                 myapache:t1         *:80->80/tcp
+[root@ip-172-31-23-201 html]# curl localhost:80
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dashboard For Admin</title>
+</head>
+<body>
+<div id="mainDiv" style="border: 1px solid black;background-color:LightBluel;height:60px">
+<center><h1 style="color:white;background-color:LightBlue ;padding:0px;">HELLO ADMIN WELCOME TO YOUR STORE!! </h1></center>
+</div>
+<div id="sideDiv" style="border: 1px solid black;background-color:LightPink;height:500px;width:150px;float:left "></div>
+<div style="border : 1px solid black; background-color:MistyRose;height:500px;">
+<iframe id="target" src="temp.html" style="height:498px;width:1175px"></iframe>
+</div>
+<div id="footDiv" style="border:1px solid black;height:60px">
+<font color="red">
+<marquee direction="right"bgcolor="lightblue">
+<h2>Explore.Nurture.Inspire.Quality is our Recipe.</h2>
+</marquee>
+</font>
+</div>
+
+</body>
+<script type="text/javascript" src="./js/dashboardAdmin.js"></script>
+</html>
+[root@ip-172-31-23-201 html]# hostname -I
+172.31.23.201 172.17.0.1 172.18.0.1
+[root@ip-172-31-23-201 html]# history
+    1  yum install docker -y
+    2  yum install httpd -y
+    3  service docker start
+    4  service httpd start
+    5  cd /var/www/html
+    6  wget https://codeload.github.com/KomalKumraCoder/Shopping-Cart/zip/master
+    7  unzip master
+    8  mv /var/www/html/master/* /var/www/html
+    9   mv /var/www/html/Shopping-Cart-master/* /var/www/html
+   10  cd ..
+   11  exit
+   12  hostname I
+   13  hostname -I
+   14  curl 172.31.23.201
+   15  docker run -d --name web centos:latest
+   16  vi dockerfile
+   17  docker build -t myapache:t1
+   18  docker build -t myapache:t1 .
+   19  docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+   20  docker ps -a
+   21  docker stop fb2
+   22  docker rm fb2
+   23  docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+   24  netstat -ntlp
+   25  docker stop httpd
+   26  service stop httpd
+   27  service httpd stop
+   28  docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+   29  docker ps -a
+   30  docker stop 46d
+   31  docker rm 46d
+   32  docker run -d -v /var/www/html:/var/www/html  -p 80:80 --name  web centos:latest
+   33  service httpd restart
+   34  hostname -I
+   35  docker swarm init --advertise-addr 172.31.23.201
+   36  docker node ls
+   37  docker ps -a
+   38  docker images
+   39  docker service create --name MyWeb --publish published=80,target=80 --replicas 2 centos:latest
+   40  docker service ls
+   41  docker rm MyWeb
+   42  docker services ls
+   43  docker service ls
+   44  docker services rm MyWeb
+   45  docker service rm MyWeb
+   46  docker service create --name MyWeb --publish published=80,target=80 --replicas 2 myapache:t1
+   47  service httpd stop
+   48  docker service ls
+   49  cd /var/www/html
+   50  ls
+   51  cd /etc/httpd/
+   52  ls
+   53  cat conf.d
+   54  cd conf.d/
+   55  ls
+   56  cat welcome.conf
+   57  vi welcome.conf
+   58  cd /var/www/html
+   59  ls
+   60  service httpd restart
+   61  curl localhost
+   62  ls
+   63  cat index.html
+   64  cd ..
+   65  ls
+   66  cd /
+   67  ls
+   68  service httpd restart
+   69  curl localhost
+   70  docker ps
+   71  docker exec -it bec066a456cc bash
+   72  history
+   73  cat dockerfile
+   74  cd
+   75  cat dockerfile
+   76  docker service
+   77  docker service  create -h
+   78  docker service  create -h|grep volume
+   79  docker service  create -h|grep mount
+   80  history
+   81  #   46  docker service create --name MyWeb --publish published=80,target=80 --replicas 2 myapache:t1
+   82  #   46  docker service create --name MyWeb-mount --mount  --publish published=80,target=8080 --replicas 2 myapache:t1
+   83  cd /var/www/html/
+   84  ls
+   85  docker service create --name MyWeb-mount --mount /var/www/html  --publish published=80,target=8080 --replicas 2 myapache:t1
+   86  docker service create --name MyWeb-mount --mount /var/www/html=/var/www/html  --publish published=80,target=8080 --replicas 2 myapache:t1
+   87  docker service create --name MyWeb-mount --mount type=bind,source=/var/www/html,target=/var/www/html  --publish published=80,target=8080 --replicas 2 myapache:t1
+   88  docker service ls
+   89  docker service rm My
+   90  docker service rm MyWeb
+   91  docker service ls
+   92  docker service create --name MyWeb-mount --mount type=bind,source=/var/www/html,target=/var/www/html  --publish published=80,target=8080 --replicas 2 myapache:t1
+   93  docker service ls
+   94  curl localhost:8080
+   95  curl localhost:80
+   96  docker service rm MyWeb-mout
+   97  docker service rm MyWeb-mount
+   98  docker service create --name MyWeb-mount --mount type=bind,source=/var/www/html,target=/var/www/html  --publish published=80,target=80 --replicas 2 myapache:t1
+   99  ls
+  100  docker service ls
+  101  curl localhost:80
+  102  hostname -I
+  103  history
+[root@ip-172-31-23-201 html]#
